@@ -5,6 +5,6 @@ namespace TLOverbookingApplication.OverbookingPrediction.Services
 {
     public interface ICancellationPredictionService
     {
-        public Task<bool> CanBeCancelledAsync( ICancellationPredictionRQ cancellationPredictionRQ );
+        public Task<bool> CanBeCancelledAsync( CancellationPredictionRQ cancellationPredictionRQ );
     }
 }

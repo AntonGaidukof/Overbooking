@@ -1,19 +1,15 @@
 ﻿using System;
 
-namespace TLOverbookingDomain.RoomStayFact
+namespace TLOverbookingApplication.RoomStayFactExtraction.Entities
 {
-    public class RoomStayFact
+    public class RoomStayFactDto
     {
-        public long Id { get; set; }
-
         public long ExternalId { get; set; }
+        
+        public DateTime? CancellationDate { get; set; }
 
-        public bool IsCancelled { get; set; }
-        
-        public int DuratuionInDays { get; set; }
-        
         public DateTime CheckInDate { get; set; }
-        
+
         public DateTime CheckOutDate { get; set; }
 
         public decimal Total { get; set; }
@@ -27,9 +23,5 @@ namespace TLOverbookingDomain.RoomStayFact
         public long RoomId { get; set; }
 
         public long RatePlanId { get; set; }
-
-        public long ProviderId { get; set; }
-
-        public int? DaysBetweenCheckInAndCanceling { get; set; }
     }
 }

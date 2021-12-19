@@ -3,7 +3,7 @@ using TLOverbookingApplication.CancellationPrediction.Entities;
 
 namespace TLOverbookingApi.Dto
 {
-    public class CancellationPredictionRQDto : ICancellationPredictionRQ
+    public class CancellationPredictionRQDto : CancellationPredictionRQ
     {
         public long RoomStayId { get; set; }
 

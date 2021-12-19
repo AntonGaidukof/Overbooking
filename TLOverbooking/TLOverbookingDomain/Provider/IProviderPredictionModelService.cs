@@ -1,6 +1,6 @@
 ﻿namespace TLOverbookingDomain.Provider
 {
-    public interface IProviderPredictionService
+    public interface IProviderPredictionModelService
     {
         public void AddOrUpdate();
     }

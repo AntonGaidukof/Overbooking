@@ -2,7 +2,7 @@
 
 namespace TLOverbookingApplication.CancellationPrediction.Entities
 {
-    public interface ICancellationPredictionRQ
+    public class CancellationPredictionRQ
     {
         public long RoomStayId { get; }
 

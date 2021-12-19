@@ -1,6 +1,8 @@
-﻿namespace TLOverbookingDomain.Provider
+﻿using TLOverbookingDomain.Abstractions;
+
+namespace TLOverbookingDomain.Provider
 {
-    public interface IProviderPredictionModelRepository
+    public interface IProviderPredictionModelRepository : IBaseRepository<ProviderPredictionModel>
     {
         ProviderPredictionModel GetById( long providerId );
     }

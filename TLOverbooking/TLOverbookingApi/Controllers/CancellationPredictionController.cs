@@ -15,12 +15,24 @@ namespace TLOverbookingApi.Controllers
             _cancellationPredictionApiService = cancellationPredictionApiService;
         }
 
-        [HttpGet, Route( "" )]
+        [HttpGet, Route( "{providerId}" )]
         public async Task<IActionResult> GetCancellationPrediction( CancellationPredictionRQDto cancellationPredictionDto )
         {
             CancellationPredictionResultDto cancellationPredictionResultDto = await _cancellationPredictionApiService.GetCancellationPredicctionResult( cancellationPredictionDto );
-            
+
             return Ok( cancellationPredictionResultDto );
+        }
+
+        [HttpGet, Route( "/possible-cancellation" )]
+        public async Task<IActionResult> GetPossibleCancellations()
+        {
+            return Ok();
+        }
+
+        [HttpPost, Route( "/possible-cancellation" )]
+        public async Task<IActionResult> CheckBookingCancellationProbability()
+        {
+            return Ok();
         }
     }
 }
