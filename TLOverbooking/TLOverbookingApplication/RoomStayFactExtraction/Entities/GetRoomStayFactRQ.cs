@@ -2,7 +2,7 @@
 
 namespace TLOverbookingApplication.RoomStayFactExtraction.Entities
 {
-    public class RoomStayFactExtractionRQ
+    public class GetRoomStayFactRQ
     {
         public long ProviderId { get; set; }
 

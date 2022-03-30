@@ -4,23 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using TLOverbookingApplication.RoomStayFactExtraction.Convertors;
 using TLOverbookingApplication.RoomStayFactExtraction.Entities;
-using TLOverbookingApplication.RoomStayFactExtraction.Extractors;
+using TLOverbookingApplication.WebClient;
 using TLOverbookingDomain.RoomStayFact;
 
 namespace TLOverbookingApplication.RoomStayFactExtraction.Services
 {
     public class RoomStayFactExtractionService : IRoomStayFactExtractionService
     {
-        private readonly IRoomStayFactExtractor _roomStayFactExtractor;
+        private readonly IWebPmsWebClient _webPmsWebClient;
         private readonly IRoomStayFactConvertor _roomStayFactConvertor;
         private readonly IRoomStayFactService _roomStayFactService;
 
-        public RoomStayFactExtractionService( 
-            IRoomStayFactExtractor roomStayFactExtractor,
+        public RoomStayFactExtractionService(
+            IWebPmsWebClient webPmsWebClient,
             IRoomStayFactService roomStayFactService,
             IRoomStayFactConvertor roomStayFactConvertor )
         {
-            _roomStayFactExtractor = roomStayFactExtractor;
+            _webPmsWebClient = webPmsWebClient;
             _roomStayFactService = roomStayFactService;
             _roomStayFactConvertor = roomStayFactConvertor;
         }
@@ -34,21 +34,21 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Services
              */
             DateTime startDate = DateTime.UtcNow.AddYears( -1 ).Date;
             DateTime endDate = DateTime.UtcNow.Date;
-            RoomStayFactExtractionRQ roomStayFactExtractionRQ = new RoomStayFactExtractionRQ
+            GetRoomStayFactRQ request = new GetRoomStayFactRQ
             {
                 Start = startDate,
                 End = endDate,
                 ProviderId = providerId
             };
-            RoomStayFactExtractionRS roomStayFactsRS = await _roomStayFactExtractor.GetRoomStayFactAsync( roomStayFactExtractionRQ );
+            GetRoomStayFactRS response = await _webPmsWebClient.GetRoomStayFactsAsync( request );
 
-            if ( roomStayFactsRS == null )
+            if ( response == null )
             {
                 // TODO сделать типизированные исключения
-                throw new Exception( "Empty roomstay fact extraction response" );
+                throw new Exception( "Invalid roomstay fact extraction response" );
             }
 
-            RoomStayFact[] extractedRoomStayFacts = _roomStayFactConvertor.ConvertToRoomStayFact( roomStayFactsRS );
+            RoomStayFact[] extractedRoomStayFacts = _roomStayFactConvertor.ConvertToRoomStayFact( response );
             List<RoomStayFact> currentRoomStayFacts = await _roomStayFactService.GetAsync( providerId, startDate, endDate );
 
             if ( currentRoomStayFacts.Count == 0 )

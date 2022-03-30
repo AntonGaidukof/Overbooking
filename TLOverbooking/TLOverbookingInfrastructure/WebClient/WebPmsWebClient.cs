@@ -1,14 +1,61 @@
-﻿using System.IO;
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using TLOverbookingApplication.BookingCancellationExtraction.Entities;
+using TLOverbookingApplication.Configuration;
+using TLOverbookingApplication.RoomStayFactExtraction.Entities;
 using TLOverbookingApplication.WebClient;
 
 namespace TLOverbookingInfrastructure.WebClient
 {
     public class WebPmsWebClient : IWebPmsWebClient
     {
-        public async Task<RS> GetAsync<RS>( string url )
+        private IConfiguration _configuration;
+
+        public WebPmsWebClient( IConfiguration configuration )
+        {
+            _configuration = configuration;
+        }
+
+        public Task<GetBookingCancellationRS> GetBookingCancellationsAsync( GetBookingCancellationRQ request )
+        {
+            string webpmsApiBaseUrl = _configuration.GetSection( ApplicationConfiguration.WebPMSApiBaseUrl ).Value;
+            string getBookingCancellationUrl = _configuration.GetSection( ApplicationConfiguration.GetBookingCancellationUrl ).Value;
+            string url = $"{webpmsApiBaseUrl}/{getBookingCancellationUrl}?{GetUrlParams( request )}";
+            
+            return GetAsync<GetBookingCancellationRS>( url );
+        }
+
+        public Task<GetRoomStayFactRS> GetRoomStayFactsAsync( GetRoomStayFactRQ request )
+        {
+            string webpmsApiBaseUrl = _configuration.GetSection( ApplicationConfiguration.WebPMSApiBaseUrl ).Value;
+            string getBookingCancellationUrl = _configuration.GetSection( ApplicationConfiguration.GetRoomStayFactUrl ).Value;
+            string url = $"{webpmsApiBaseUrl}/{getBookingCancellationUrl}?{GetUrlParams( request )}";
+
+            return GetAsync<GetRoomStayFactRS>( url );
+        }
+
+        private string GetUrlParams<T>( T ob )
+        {
+            var properties = typeof( T ).GetProperties( BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static );
+            var result = new StringBuilder();
+
+            foreach ( var propertie in properties )
+            {
+                string value = propertie.GetValue( ob ).ToString();
+                result.Append( $"{propertie.Name.ToLower()}={value}&" );
+            }
+
+            result.Remove( result.Length - 1, 1 );
+
+            return result.ToString();
+        }
+
+        private async Task<RS> GetAsync<RS>( string url )
         {
             WebRequest request = WebRequest.Create( url );
             request.Method = "GET";
@@ -29,7 +76,7 @@ namespace TLOverbookingInfrastructure.WebClient
             return responseData;
         }
 
-        public async Task<RS> PostAsync<RS, RQ>( string url, RQ requestData )
+        private async Task<RS> PostAsync<RS, RQ>( string url, RQ requestData )
         {
             WebRequest request = WebRequest.Create( url );
             string jsonRequestData = JsonSerializer.Serialize( requestData );

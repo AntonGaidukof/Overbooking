@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TLOverbookingApi.Services;
+using TLOverbookingApplication.Configuration;
 using TLOverbookingInfrastructure.Foundation;
 using TLOverbookingInfrastructure.Injections;
 
@@ -33,7 +34,7 @@ namespace TLOverbookingApi
                  c.SwaggerDoc( "v1", new OpenApiInfo { Title = "TLOverbookingApi", Version = "v1" } );
              } );
             services.AddDbContext<TLOverbookingDbContext>( c =>
-                c.UseSqlServer( Configuration.GetConnectionString( "TLOverbookingConnection" ) )
+                c.UseSqlServer( Configuration.GetConnectionString( ApplicationConfiguration.DBConnectionString ) )
             );
         }
 

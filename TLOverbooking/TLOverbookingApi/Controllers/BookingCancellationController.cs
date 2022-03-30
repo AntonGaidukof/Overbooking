@@ -35,6 +35,7 @@ namespace TLOverbookingApi.Controllers
             return Ok();
         }
 
+        [HttpPost, Route( "/extract" )]
         public async Task<IActionResult> ExtractBookingCancellationsAsync( ExtractBookingCancellationsDto extractBookingCancellationsDto )
         {
             return Ok( await _bookingCancellationApiService.ExtractBookingCancellationsAsync( extractBookingCancellationsDto ) );

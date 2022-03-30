@@ -25,9 +25,26 @@ namespace TLOverbookingApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<bool> ExtractBookingCancellationsAsync( ExtractBookingCancellationsDto extractBookingCancellationsDto )
+        public async Task<BookingCancellationsDto> ExtractBookingCancellationsAsync( ExtractBookingCancellationsDto request )
         {
-            throw new NotImplementedException();
+            DateTime startDate;
+            DateTime endDate;
+            try
+            {
+                startDate = DateTime.Parse( request.StartDate );
+                endDate = DateTime.Parse( request.EndDate );
+            }
+            catch ( Exception )
+            {
+                return new BookingCancellationsDto { BookingCancellations = Array.Empty<BookingCancellationDto>() };
+            }
+
+            var savedBookingCancellations = await _bookingCancellationExtractionService.ExtractBookingCancellationsAsync( request.ProviderId, startDate, endDate );
+
+            return new BookingCancellationsDto
+            {
+                BookingCancellations = savedBookingCancellations.Select( ConvertBookingCancellationToDto ).ToArray()
+            };
         }
 
         public async Task<BookingCancellationsDto> GetBookingCancellationsAsync( GetBookingCancellationDto request )

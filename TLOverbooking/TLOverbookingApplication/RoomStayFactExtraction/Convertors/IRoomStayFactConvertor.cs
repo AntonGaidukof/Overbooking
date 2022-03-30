@@ -5,6 +5,6 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Convertors
 {
     public interface  IRoomStayFactConvertor
     {
-        RoomStayFact[] ConvertToRoomStayFact( RoomStayFactExtractionRS roomStayFactExtractionRS );
+        RoomStayFact[] ConvertToRoomStayFact( GetRoomStayFactRS roomStayFactExtractionRS );
     }
 }

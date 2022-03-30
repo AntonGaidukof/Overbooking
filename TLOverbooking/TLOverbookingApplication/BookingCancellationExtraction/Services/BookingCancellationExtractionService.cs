@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TLOverbookingApplication.BookingCancellationExtraction.Entities;
-using TLOverbookingApplication.BookingCancellationExtraction.Extractors;
+using TLOverbookingApplication.WebClient;
 using TLOverbookingDomain.BookingCancellation;
 
 namespace TLOverbookingApplication.BookingCancellationExtraction.Services
@@ -11,27 +11,27 @@ namespace TLOverbookingApplication.BookingCancellationExtraction.Services
     public class BookingCancellationExtractionService : IBookingCancellationExtractionService
     {
         private readonly IBookingCancellationService _bookingCancellationService;
-        private readonly IBookingCancellationExtractor _bookingCancellationExtractor;
+        private readonly IWebPmsWebClient _webPmsWebClient;
 
-        public BookingCancellationExtractionService( IBookingCancellationService bookingCancellationService, IBookingCancellationExtractor bookingCancellationExtractor )
+        public BookingCancellationExtractionService( IBookingCancellationService bookingCancellationService, IWebPmsWebClient webPmsWebClient )
         {
             _bookingCancellationService = bookingCancellationService;
-            _bookingCancellationExtractor = bookingCancellationExtractor;
+            _webPmsWebClient = webPmsWebClient;
         }
 
-        public async Task ExtractBookingCancellationsAsync( long providerId, DateTime startDate, DateTime endDate )
+        public async Task<List<BookingCancellation>> ExtractBookingCancellationsAsync( long providerId, DateTime startDate, DateTime endDate )
         {
-            BookingCancellationExtractionRQ request = new BookingCancellationExtractionRQ
+            GetBookingCancellationRQ request = new GetBookingCancellationRQ
             {
                 ProviderId = providerId,
-                StartDate = startDate,
-                EndDate = endDate
+                StartDate = startDate.ToShortDateString(),
+                EndDate = endDate.ToShortDateString()
             };
-            BookingCancellationExtractionRS response = await _bookingCancellationExtractor.GetBookingCancellationsAsync( request );
+            GetBookingCancellationRS response = await _webPmsWebClient.GetBookingCancellationsAsync( request );
 
             if ( response?.BookingCancellations.Count == 0 )
             {
-                return;
+                return new List<BookingCancellation>();
             }
 
             List<BookingCancellation> extractedBookingCancellations = response.BookingCancellations.Select( ConvertBookingCancellationFromDto ).ToList();
@@ -55,6 +55,8 @@ namespace TLOverbookingApplication.BookingCancellationExtraction.Services
             }
 
             _bookingCancellationService.AddRange( bookingCancellationsToSave );
+
+            return bookingCancellationsToSave;
         }
 
         private BookingCancellation ConvertBookingCancellationFromDto( BookingCancellationDto bookingCancellationDto )

@@ -5,7 +5,7 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Convertors
 {
     public class RoomStayFactConvertor : IRoomStayFactConvertor
     {
-        RoomStayFact[] IRoomStayFactConvertor.ConvertToRoomStayFact( RoomStayFactExtractionRS roomStayFactExtractionRS )
+        RoomStayFact[] IRoomStayFactConvertor.ConvertToRoomStayFact( GetRoomStayFactRS roomStayFactExtractionRS )
         {
             throw new System.NotImplementedException();
         }

@@ -1,6 +1,6 @@
 ﻿namespace TLOverbookingApplication.RoomStayFactExtraction.Entities
 {
-    public class RoomStayFactExtractionRS
+    public class GetRoomStayFactRS
     {
         public RoomStayFactDto[] roomStayFacts;
     }

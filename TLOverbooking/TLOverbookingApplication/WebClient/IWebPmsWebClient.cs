@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
+using TLOverbookingApplication.BookingCancellationExtraction.Entities;
+using TLOverbookingApplication.RoomStayFactExtraction.Entities;
 
 namespace TLOverbookingApplication.WebClient
 {
     public interface IWebPmsWebClient
     {
-        Task<RS> PostAsync<RS, RQ>( string url, RQ request );
+        Task<GetBookingCancellationRS> GetBookingCancellationsAsync( GetBookingCancellationRQ request );
 
-        Task<RS> GetAsync<RS>( string url );
+        Task<GetRoomStayFactRS> GetRoomStayFactsAsync( GetRoomStayFactRQ request );
     }
 }

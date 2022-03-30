@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TLOverbookingApplication.BookingCancellationExtraction.Extractors;
 using TLOverbookingApplication.BookingCancellationExtraction.Services;
 using TLOverbookingApplication.RoomStayFactExtraction.Convertors;
-using TLOverbookingApplication.RoomStayFactExtraction.Extractors;
 using TLOverbookingApplication.RoomStayFactExtraction.Services;
 using TLOverbookingApplication.WebClient;
 using TLOverbookingDomain.Abstractions;
@@ -21,7 +19,6 @@ namespace TLOverbookingInfrastructure.Injections
         {
             // RoomStayFactExtraction
             services.AddScoped<IRoomStayFactConvertor, RoomStayFactConvertor>();
-            services.AddScoped<IRoomStayFactExtractor, RoomStayFactExtractor>();
             services.AddScoped<IRoomStayFactExtractionService, RoomStayFactExtractionService>();
 
             //RoomStayFact
@@ -41,7 +38,6 @@ namespace TLOverbookingInfrastructure.Injections
 
             // BookingCancellationExtraction
             services.AddScoped<IBookingCancellationExtractionService, BookingCancellationExtractionService>();
-            services.AddScoped<IBookingCancellationExtractor, BookingCancellationExtractor>();
 
             // Foundation
             services.AddScoped<IUnitOfWork, UnitOfWork<TLOverbookingDbContext>>();

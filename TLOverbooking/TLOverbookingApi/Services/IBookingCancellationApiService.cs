@@ -11,6 +11,6 @@ namespace TLOverbookingApi.Services
 
         public Task DeleteAllProviderBookingCancellationsAsync( long providerId );
 
-        public Task<bool> ExtractBookingCancellationsAsync( ExtractBookingCancellationsDto extractBookingCancellationsDto );
+        public Task<BookingCancellationsDto> ExtractBookingCancellationsAsync( ExtractBookingCancellationsDto extractBookingCancellationsDto );
     }
 }

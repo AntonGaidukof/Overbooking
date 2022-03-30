@@ -2,7 +2,7 @@
 
 namespace TLOverbookingApplication.BookingCancellationExtraction.Entities
 {
-    public class BookingCancellationExtractionRS
+    public class GetBookingCancellationRS
     {
         public List<BookingCancellationDto> BookingCancellations { get; set; }
     }
