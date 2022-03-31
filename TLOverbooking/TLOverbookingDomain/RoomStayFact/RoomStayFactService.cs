@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace TLOverbookingDomain.RoomStayFact
@@ -24,9 +22,9 @@ namespace TLOverbookingDomain.RoomStayFact
             return _roomStayFactRepository.GetAllAsync();
         }
 
-        public Task<List<RoomStayFact>> GetAsync( long providerId, DateTime start, DateTime end )
+        public Task<List<RoomStayFact>> GetAllForProviderAsync( long providerId )
         {
-            return _roomStayFactRepository.GetAsync( providerId, start, end );
+            return _roomStayFactRepository.GetAllForProviderAsync( providerId );
         }
     }
 }

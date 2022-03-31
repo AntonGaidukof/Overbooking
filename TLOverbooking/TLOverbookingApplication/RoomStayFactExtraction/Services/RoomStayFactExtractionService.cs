@@ -49,23 +49,23 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Services
             }
 
             RoomStayFact[] extractedRoomStayFacts = _roomStayFactConvertor.ConvertToRoomStayFact( response );
-            List<RoomStayFact> currentRoomStayFacts = await _roomStayFactService.GetAsync( providerId, startDate, endDate );
+            List<RoomStayFact> providerRoomStayFacts = await _roomStayFactService.GetAllForProviderAsync( providerId );
 
-            if ( currentRoomStayFacts.Count == 0 )
+            if ( providerRoomStayFacts.Count == 0 )
             {
                 _roomStayFactService.AddRange( extractedRoomStayFacts );
                 return;
             }
 
-            List<RoomStayFact> newRoomStayFacts = new List<RoomStayFact>();
+            List<RoomStayFact> roomStayFactsToSave = new List<RoomStayFact>();
             foreach ( RoomStayFact roomStayFact in extractedRoomStayFacts )
             {
                 // TODO переделать currentRoomStayFacts на словарь
-                RoomStayFact currentRoomStayFact = currentRoomStayFacts.FirstOrDefault( rsf => rsf.ExternalId == roomStayFact.ExternalId );
+                RoomStayFact currentRoomStayFact = providerRoomStayFacts.FirstOrDefault( rsf => rsf.ExternalId == roomStayFact.ExternalId );
 
                 if ( currentRoomStayFact == null )
                 {
-                    newRoomStayFacts.Add( currentRoomStayFact );
+                    roomStayFactsToSave.Add( currentRoomStayFact );
                     continue;
                 }
 
@@ -81,10 +81,10 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Services
                 currentRoomStayFact.RoomId = roomStayFact.RoomId;
                 currentRoomStayFact.RoomTypeId = roomStayFact.RoomTypeId;
                 currentRoomStayFact.Total = roomStayFact.Total;
-                newRoomStayFacts.Add( currentRoomStayFact );
+                //roomStayFactsToSave.Add( currentRoomStayFact );
             }
 
-            _roomStayFactService.AddRange( newRoomStayFacts );
+            _roomStayFactService.AddRange( roomStayFactsToSave );
         }
     }
 }

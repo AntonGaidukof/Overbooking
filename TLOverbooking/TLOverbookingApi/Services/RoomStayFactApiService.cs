@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using TLOverbookingApi.Dto;
+using TLOverbookingApi.Dto.RoomStayFact;
 using TLOverbookingApplication.RoomStayFactExtraction.Services;
+using TLOverbookingDomain.Abstractions;
 using TLOverbookingDomain.RoomStayFact;
 
 namespace TLOverbookingApi.Services
@@ -11,39 +12,44 @@ namespace TLOverbookingApi.Services
     {
         private readonly IRoomStayFactExtractionService _roomStayFactExtractionService;
         private readonly IRoomStayFactService _roomStayFactService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoomStayFactApiService( IRoomStayFactExtractionService roomStayFactExtractionService, IRoomStayFactService roomStayFactService )
+        public RoomStayFactApiService( 
+            IRoomStayFactExtractionService roomStayFactExtractionService,
+            IRoomStayFactService roomStayFactService,
+            IUnitOfWork unitOfWork )
         {
             _roomStayFactExtractionService = roomStayFactExtractionService;
             _roomStayFactService = roomStayFactService;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task ExtractAsync( long? providerId )
+        public async Task ExtractAsync( long providerId )
         {
-            if ( !providerId.HasValue )
+            await _roomStayFactExtractionService.ExtractRoomStayFactsAsync( providerId );
+            await _unitOfWork.CommitAsync();
+        }
+
+        public void Add( RoomStayFactsDto roomStayFactsDto )
+        {
+            if ( roomStayFactsDto?.RoomStayFacts == null )
             {
-                // TODO переделать на нормальный Exception
-                throw new ArgumentException();
+                throw new ArgumentException( "Incorrect input data" );
             }
 
-            await _roomStayFactExtractionService.ExtractRoomStayFactsAsync( providerId.Value );
+            var roomStayFacts = roomStayFactsDto.RoomStayFacts.Select( ConvertToRoomStayFact );
+
+            _roomStayFactService.AddRange( roomStayFacts );
+            _unitOfWork.Commit();
         }
 
-        public void Add( RoomStayFactDto roomStayFactDto )
+        public async Task<RoomStayFactsDto> GetAllForProviderAsync( long providerId )
         {
-            if ( roomStayFactDto == null )
+            var roomStayFacts = await _roomStayFactService.GetAllForProviderAsync( providerId );
+            return new RoomStayFactsDto
             {
-                throw new ArgumentException();
-            }
-
-            RoomStayFact roomStayFact = ConvertToRoomStayFact( roomStayFactDto );
-
-            _roomStayFactService.AddRange( new[] { roomStayFact } );
-        }
-
-        public async Task<RoomStayFactDto[]> GetAllAsync()
-        {
-            return ( await _roomStayFactService.GetAllAsync() ).Select( ConvertToRoomStayFactDto ).ToArray();
+                RoomStayFacts = roomStayFacts.Select( ConvertToRoomStayFactDto ).ToList()
+            };
         }
 
         private RoomStayFact ConvertToRoomStayFact( RoomStayFactDto roomStayFactDto )
@@ -57,7 +63,7 @@ namespace TLOverbookingApi.Services
                 DaysBetweenCheckInAndCanceling = roomStayFactDto.DaysBetweenCheckInAndCanceling,
                 DuratuionInDays = roomStayFactDto.DuratuionInDays,
                 ExternalId = Convert.ToInt64( roomStayFactDto.ExternalId ),
-                Id = Convert.ToInt64( roomStayFactDto.Id ),
+                Id = !String.IsNullOrEmpty( roomStayFactDto.Id ) ? Convert.ToInt64( roomStayFactDto.Id ) : default,
                 IsCancelled = roomStayFactDto.IsCancelled,
                 ProviderId = Convert.ToInt64( roomStayFactDto.ProviderId ),
                 RatePlanId = Convert.ToInt64( roomStayFactDto.RatePlanId ),

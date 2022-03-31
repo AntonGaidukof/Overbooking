@@ -22,9 +22,9 @@ namespace TLOverbookingInfrastructure.Repositopries
             return Entities.ToListAsync();
         }
 
-        public Task<List<RoomStayFact>> GetAsync( long providerId, DateTime start, DateTime end )
+        public Task<List<RoomStayFact>> GetAllForProviderAsync( long providerId )
         {
-            return Entities.Where( rsf => rsf.ProviderId == providerId && rsf.CheckInDate >= start && rsf.CheckOutDate <= end ).ToListAsync();
+            return Entities.Where( rsf => rsf.ProviderId == providerId ).ToListAsync();
         }
 
         public Task<RoomStayFact> GetByIdAsync( long roomStayFactId )

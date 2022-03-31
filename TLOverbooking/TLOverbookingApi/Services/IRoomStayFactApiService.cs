@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
-using TLOverbookingApi.Dto;
+using TLOverbookingApi.Dto.RoomStayFact;
 
 namespace TLOverbookingApi.Services
 {
     public interface IRoomStayFactApiService
     {
-        Task ExtractAsync( long? providerId );
+        Task ExtractAsync( long providerId );
 
-        void Add( RoomStayFactDto roomStayFactDto );
+        void Add( RoomStayFactsDto roomStayFactsDto );
 
-        Task<RoomStayFactDto[]> GetAllAsync();
+        Task<RoomStayFactsDto> GetAllForProviderAsync( long providerId );
     }
 }

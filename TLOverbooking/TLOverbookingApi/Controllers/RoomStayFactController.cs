@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TLOverbookingApi.Dto;
+using TLOverbookingApi.Dto.RoomStayFact;
 using TLOverbookingApi.Services;
 
 namespace TLOverbookingApi.Controllers
@@ -16,23 +16,23 @@ namespace TLOverbookingApi.Controllers
         }
 
         [HttpGet, Route( "/extract/{providerId}" )]
-        public async Task<IActionResult> ExtractAsync( long? providerId )
+        public async Task<IActionResult> ExtractAsync( long providerId )
         {
             await _roomStayFactApiService.ExtractAsync( providerId );
             return Ok();
         }
 
         [HttpPost, Route( "" )]
-        public IActionResult Add( RoomStayFactDto roomStayFactDto )
+        public IActionResult Add( [FromBody] RoomStayFactsDto roomStayFactsDto )
         {
-            _roomStayFactApiService.Add( roomStayFactDto );
+            _roomStayFactApiService.Add( roomStayFactsDto );
             return Ok();
         }
 
-        [HttpGet, Route( "" )]
-        public async Task<IActionResult> GetAsync()
+        [HttpGet, Route( "{providerId}" )]
+        public async Task<IActionResult> GetAsync( long providerId )
         {
-            return Ok( await _roomStayFactApiService.GetAllAsync() );
+            return Ok( await _roomStayFactApiService.GetAllForProviderAsync( providerId ) );
         }
     }
 }

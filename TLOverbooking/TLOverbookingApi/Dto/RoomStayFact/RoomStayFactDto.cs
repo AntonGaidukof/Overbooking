@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace TLOverbookingApi.Dto
+namespace TLOverbookingApi.Dto.RoomStayFact
 {
     [DataContract]
     public class RoomStayFactDto

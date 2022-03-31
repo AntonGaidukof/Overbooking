@@ -14,6 +14,6 @@ namespace TLOverbookingDomain.RoomStayFact
 
         Task<List<RoomStayFact>> GetAllAsync();
 
-        Task<List<RoomStayFact>> GetAsync( long providerId, DateTime start, DateTime end );
+        Task<List<RoomStayFact>> GetAllForProviderAsync( long providerId );
     }
 }

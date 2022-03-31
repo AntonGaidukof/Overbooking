@@ -8,7 +8,7 @@ namespace TLOverbookingDomain.RoomStayFact
     {
         void AddRange( IEnumerable<RoomStayFact> roomStayFacts );
 
-        Task<List<RoomStayFact>> GetAsync( long providerId, DateTime start, DateTime end );
+        Task<List<RoomStayFact>> GetAllForProviderAsync( long providerId );
 
         Task<List<RoomStayFact>> GetAllAsync();
     }
