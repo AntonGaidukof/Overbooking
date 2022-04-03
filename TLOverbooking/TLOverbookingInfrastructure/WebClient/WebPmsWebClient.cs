@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Nancy.Json;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -26,7 +27,7 @@ namespace TLOverbookingInfrastructure.WebClient
             string webpmsApiBaseUrl = _configuration.GetSection( ApplicationConfiguration.WebPMSApiBaseUrl ).Value;
             string getBookingCancellationUrl = _configuration.GetSection( ApplicationConfiguration.GetBookingCancellationUrl ).Value;
             string url = $"{webpmsApiBaseUrl}/{getBookingCancellationUrl}?{GetUrlParams( request )}";
-            
+
             return GetAsync<GetBookingCancellationRS>( url );
         }
 
@@ -35,7 +36,6 @@ namespace TLOverbookingInfrastructure.WebClient
             string webpmsApiBaseUrl = _configuration.GetSection( ApplicationConfiguration.WebPMSApiBaseUrl ).Value;
             string getBookingCancellationUrl = _configuration.GetSection( ApplicationConfiguration.GetRoomStayFactUrl ).Value;
             string url = $"{webpmsApiBaseUrl}/{getBookingCancellationUrl}?{GetUrlParams( request )}";
-
             return GetAsync<GetRoomStayFactRS>( url );
         }
 
@@ -59,6 +59,7 @@ namespace TLOverbookingInfrastructure.WebClient
         {
             WebRequest request = WebRequest.Create( url );
             request.Method = "GET";
+            request.Headers.Add( "x-api-key", "anton.gaidukov" );
 
             WebResponse response = await request.GetResponseAsync();
             RS responseData = default;
@@ -68,11 +69,13 @@ namespace TLOverbookingInfrastructure.WebClient
                 using ( StreamReader reader = new StreamReader( stream ) )
                 {
                     string responseJson = reader.ReadToEnd();
-                    responseData = JsonSerializer.Deserialize<RS>( responseJson );
+                    JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                    responseData = json_serializer.Deserialize<RS>( responseJson );
                 }
             }
 
             response.Close();
+
             return responseData;
         }
 
@@ -85,7 +88,8 @@ namespace TLOverbookingInfrastructure.WebClient
             request.Method = "POST";
             request.ContentType = "application/json; charset=utf-8";
             request.ContentLength = byteArray.Length;
-           
+            request.Headers.Add( "x-api-key", "anton.gaidukov" );
+
             using ( Stream dataStream = request.GetRequestStream() )
             {
                 dataStream.Write( byteArray, 0, byteArray.Length );
@@ -93,7 +97,7 @@ namespace TLOverbookingInfrastructure.WebClient
 
             WebResponse response = await request.GetResponseAsync();
             RS responseData = default;
-            
+
             using ( Stream stream = response.GetResponseStream() )
             {
                 using ( StreamReader reader = new StreamReader( stream ) )
@@ -102,7 +106,7 @@ namespace TLOverbookingInfrastructure.WebClient
                     responseData = JsonSerializer.Deserialize<RS>( responseJson );
                 }
             }
-            
+
             response.Close();
             return responseData;
         }

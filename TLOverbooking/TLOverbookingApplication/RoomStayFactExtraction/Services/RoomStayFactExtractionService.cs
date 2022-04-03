@@ -36,19 +36,19 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Services
             DateTime endDate = DateTime.UtcNow.Date;
             GetRoomStayFactRQ request = new GetRoomStayFactRQ
             {
-                Start = startDate,
-                End = endDate,
+                /*Start = startDate,
+                End = endDate,*/
                 ProviderId = providerId
             };
             GetRoomStayFactRS response = await _webPmsWebClient.GetRoomStayFactsAsync( request );
 
-            if ( response == null )
+            if ( response?.RoomStayFacts == null )
             {
                 // TODO сделать типизированные исключения
                 throw new Exception( "Invalid roomstay fact extraction response" );
             }
 
-            RoomStayFact[] extractedRoomStayFacts = _roomStayFactConvertor.ConvertToRoomStayFact( response );
+            RoomStayFact[] extractedRoomStayFacts = _roomStayFactConvertor.ConvertToRoomStayFact( response, providerId );
             List<RoomStayFact> providerRoomStayFacts = await _roomStayFactService.GetAllForProviderAsync( providerId );
 
             if ( providerRoomStayFacts.Count == 0 )
@@ -65,7 +65,7 @@ namespace TLOverbookingApplication.RoomStayFactExtraction.Services
 
                 if ( currentRoomStayFact == null )
                 {
-                    roomStayFactsToSave.Add( currentRoomStayFact );
+                    roomStayFactsToSave.Add( roomStayFact );
                     continue;
                 }
 

@@ -1,7 +1,11 @@
-﻿namespace TLOverbookingApplication.RoomStayFactExtraction.Entities
+﻿using System.Runtime.Serialization;
+
+namespace TLOverbookingApplication.RoomStayFactExtraction.Entities
 {
+    [DataContract]
     public class GetRoomStayFactRS
     {
-        public RoomStayFactDto[] roomStayFacts;
+        [DataMember( Name = "roomStayFacts" )]
+        public RoomStayFactDto[] RoomStayFacts;
     }
 }
