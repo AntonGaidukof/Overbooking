@@ -29,6 +29,7 @@ namespace TLOverbookingApi
             services.AddAppDependencies();
             services.AddScoped<IRoomStayFactApiService, RoomStayFactApiService>();
             services.AddScoped<IBookingCancellationApiService, BookingCancellationApiService>();
+            services.AddScoped<IRoomStayCancellationPredictionApiService, RoomStayCancellationPredictionApiService>();
             services.AddSwaggerGen( c =>
              {
                  c.SwaggerDoc( "v1", new OpenApiInfo { Title = "TLOverbookingApi", Version = "v1" } );

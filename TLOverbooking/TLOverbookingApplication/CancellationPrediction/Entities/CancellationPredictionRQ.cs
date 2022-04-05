@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace TLOverbookingApplication.CancellationPrediction.Entities
 {
     public class CancellationPredictionRQ
     {
-        public long RoomStayId { get; }
-
-        public DateTime LastModified { get; }
+        public IReadOnlyList<long> RoomStayIds { get; set; }
     }
 }

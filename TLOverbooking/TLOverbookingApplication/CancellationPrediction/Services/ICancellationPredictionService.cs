@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TLOverbookingApplication.CancellationPrediction.Entities;
 
 namespace TLOverbookingApplication.OverbookingPrediction.Services
 {
     public interface ICancellationPredictionService
     {
-        public Task<bool> CanBeCancelledAsync( CancellationPredictionRQ cancellationPredictionRQ );
+        public Task<Dictionary<long, bool>> GetCancellationPredictionsAsync( CancellationPredictionRQ cancellationPredictionRQ );
     }
 }

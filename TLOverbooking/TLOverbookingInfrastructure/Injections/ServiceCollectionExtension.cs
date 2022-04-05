@@ -1,11 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TLOverbookingApplication.BookingCancellationExtraction.Services;
+using TLOverbookingApplication.RoomStayCancellationLearning.Services;
 using TLOverbookingApplication.RoomStayFactExtraction.Convertors;
 using TLOverbookingApplication.RoomStayFactExtraction.Services;
 using TLOverbookingApplication.WebClient;
 using TLOverbookingDomain.Abstractions;
 using TLOverbookingDomain.BookingCancellation;
 using TLOverbookingDomain.Provider;
+using TLOverbookingDomain.RoomStayCancellation;
 using TLOverbookingDomain.RoomStayFact;
 using TLOverbookingInfrastructure.Foundation;
 using TLOverbookingInfrastructure.Repositopries;
@@ -41,6 +43,13 @@ namespace TLOverbookingInfrastructure.Injections
 
             // Foundation
             services.AddScoped<IUnitOfWork, UnitOfWork<TLOverbookingDbContext>>();
+
+            // RoomStayCancellation
+            services.AddScoped<IRoomStayCancellationLearningProcessRepository, RoomStayCancellationLearningProcessRepository>();
+            services.AddScoped<IRoomStayCancellationLearningProcessService, RoomStayCancellationLearningProcessService>();
+
+            // RoomStayCancellationLearning
+            services.AddScoped<ILearningModelService, LearningModelService>();
 
             return services;
         }

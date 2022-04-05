@@ -15,7 +15,7 @@ namespace TLOverbookingInfrastructure.Foundation
             builder.ApplyConfiguration( new ProviderPredictionModelConfiguration() );
             builder.ApplyConfiguration( new RoomStayFactConfiguration() );
             builder.ApplyConfiguration( new BookingCancellationConfiguration() );
+            builder.ApplyConfiguration( new RoomStayCancellationLearningProcessConfiguration() );
         }
-
     }
 }
