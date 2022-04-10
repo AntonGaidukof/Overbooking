@@ -12,6 +12,7 @@ using TLOverbookingDomain.RoomStayFact;
 using TLOverbookingInfrastructure.Foundation;
 using TLOverbookingInfrastructure.Repositopries;
 using TLOverbookingInfrastructure.WebClient;
+using TLOverbookingML.RoomStayCancellation.Service;
 
 namespace TLOverbookingInfrastructure.Injections
 {
@@ -50,6 +51,9 @@ namespace TLOverbookingInfrastructure.Injections
 
             // RoomStayCancellationLearning
             services.AddScoped<ILearningModelService, LearningModelService>();
+
+            // RoomStayCancellationMLModel
+            services.AddScoped<IMLModelService, MLModelService>();
 
             return services;
         }
