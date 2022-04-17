@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TLOverbookingApi.Dto.RoomStayFact;
-using TLOverbookingApi.Services;
+using TLOverbookingApi.Services.RoomStay;
 
 namespace TLOverbookingApi.Controllers
 {

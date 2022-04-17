@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace TLOverbookingApi.Dto.RoomStayCancellationPrediction
+namespace TLOverbookingApi.Dto.CancellationPrediction.RoomStay
 {
     [DataContract]
     public class ModelStartLearningDto

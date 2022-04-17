@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TLOverbookingDomain\TLOverbookingDomain.csproj" />
+    <ProjectReference Include="..\TLOverbookingML\TLOverbookingML.csproj" />
   </ItemGroup>
 
 </Project>

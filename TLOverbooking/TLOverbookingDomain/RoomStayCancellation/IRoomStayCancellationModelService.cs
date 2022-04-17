@@ -2,5 +2,6 @@
 {
     public interface IRoomStayCancellationModelService
     {
+        RoomStayCancellationModel Get( long providerId );
     }
 }

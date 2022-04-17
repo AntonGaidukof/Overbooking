@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TLOverbookingApi.Dto;
-using TLOverbookingApi.Services;
+using TLOverbookingApi.Dto.CancellationPrediction.RoomStay;
+using TLOverbookingApi.Services.RoomStay;
 
 namespace TLOverbookingApi.Controllers
 {
@@ -10,29 +10,23 @@ namespace TLOverbookingApi.Controllers
     {
         private readonly ICancellationPredictionApiService _cancellationPredictionApiService;
 
-        public CancellationPredictionController( ICancellationPredictionApiService cancellationPredictionApiService )
+        public CancellationPredictionController( ICancellationPredictionApiService roomStayCancellationPredictionApiService )
         {
-            _cancellationPredictionApiService = cancellationPredictionApiService;
+            _cancellationPredictionApiService = roomStayCancellationPredictionApiService;
         }
 
-        [HttpGet, Route( "{providerId}" )]
-        public async Task<IActionResult> GetCancellationPrediction( CancellationPredictionRQDto cancellationPredictionDto )
+        [HttpPost, Route( "room-stay/start-learning" )]
+        public async Task<IActionResult> StartLearningAsync( [FromBody] ModelStartLearningDto request )
         {
-            CancellationPredictionResultDto cancellationPredictionResultDto = await _cancellationPredictionApiService.GetCancellationPredicctionResult( cancellationPredictionDto );
-
-            return Ok( cancellationPredictionResultDto );
-        }
-
-        [HttpGet, Route( "/possible-cancellation" )]
-        public async Task<IActionResult> GetPossibleCancellations()
-        {
+            await _cancellationPredictionApiService.StartLearningAsync( request );
             return Ok();
         }
 
-        [HttpPost, Route( "/possible-cancellation" )]
-        public async Task<IActionResult> CheckBookingCancellationProbability()
+        [HttpPost, Route( "room-stay/get-prediction" )]
+        public IActionResult GetPrediction( [FromBody] GetCancellationPredictionDto request )
         {
-            return Ok();
+            var response = _cancellationPredictionApiService.GetCancellationPredictions( request );
+            return Ok( response );
         }
     }
 }

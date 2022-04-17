@@ -1,4 +1,5 @@
-﻿using TLOverbookingML.RoomStayCancellation.Model;
+﻿using System.Collections.Generic;
+using TLOverbookingML.RoomStayCancellation.Model;
 
 namespace TLOverbookingML.RoomStayCancellation.Service
 {
@@ -8,6 +9,6 @@ namespace TLOverbookingML.RoomStayCancellation.Service
 
         public void DeleteModel( string modelPath );
 
-        public ModelOutput Predict( ModelInput input, long providerId, string modelPath );
+        public Dictionary<long, ModelOutput> Predict( Dictionary<long, ModelInput> modelInputs, string modelPath );
     }
 }

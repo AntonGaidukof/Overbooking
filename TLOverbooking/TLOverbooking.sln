@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TLOverbookingApplication", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TLOverbookingInfrastructure", "TLOverbookingInfrastructure\TLOverbookingInfrastructure.csproj", "{E5CA84AF-EB64-4EFD-93F7-D11C85D02E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLOverbookingML", "TLOverbookingML\TLOverbookingML.csproj", "{8983728A-04BC-48D4-A4C3-EFC73CFA9B8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TLOverbookingML", "TLOverbookingML\TLOverbookingML.csproj", "{8983728A-04BC-48D4-A4C3-EFC73CFA9B8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

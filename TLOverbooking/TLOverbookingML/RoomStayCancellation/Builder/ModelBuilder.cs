@@ -45,8 +45,6 @@ namespace TLOverbookingML.RoomStayCancellation.Builder
             var dataProcessPipeline = mlContext.Transforms.Conversion.MapValueToKey( "IsCancelled", "IsCancelled" )
                                       .Append( mlContext.Transforms.Categorical.OneHotEncoding( new[] 
                                       { 
-                                            new InputOutputColumnPair( "Id", "Id" ),
-                                            new InputOutputColumnPair( "ExternalId", "ExternalId" ),
                                             new InputOutputColumnPair( "DuratuionInDays", "DuratuionInDays" ),
                                             new InputOutputColumnPair( "CheckInDate", "CheckInDate" ),
                                             new InputOutputColumnPair( "CheckOutDate", "CheckOutDate" ),
@@ -56,13 +54,12 @@ namespace TLOverbookingML.RoomStayCancellation.Builder
                                             new InputOutputColumnPair( "RoomTypeId", "RoomTypeId" ),
                                             new InputOutputColumnPair( "RoomId", "RoomId" ),
                                             new InputOutputColumnPair( "RatePlanId", "RatePlanId" ),
-                                            new InputOutputColumnPair( "ProviderId", "ProviderId" ),
+                                            new InputOutputColumnPair( "CreationSource", "CreationSource" ),
+                                            new InputOutputColumnPair( "PurposeKind", "PurposeKind" ),
                                             new InputOutputColumnPair( "DaysBetweenCheckInAndCanceling", "DaysBetweenCheckInAndCanceling" )
                                       } ) )
                                       .Append( mlContext.Transforms.Concatenate( "Features", new[] 
                                       { 
-                                          "Id",
-                                          "ExternalId",
                                           "DuratuionInDays",
                                           "CheckInDate",
                                           "CheckOutDate",
@@ -72,7 +69,8 @@ namespace TLOverbookingML.RoomStayCancellation.Builder
                                           "RoomTypeId",
                                           "RoomId",
                                           "RatePlanId",
-                                          "ProviderId",
+                                          "CreationSource",
+                                          "PurposeKind",
                                           "DaysBetweenCheckInAndCanceling",
                                       } ) )
                                       .Append( mlContext.Transforms.NormalizeMinMax( "Features", "Features" ) )

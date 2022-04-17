@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TLOverbookingApplication.RoomStayCancellationLearning.Services
+namespace TLOverbookingApplication.RoomStayCancellation.Services
 {
     public interface ILearningModelService
     {

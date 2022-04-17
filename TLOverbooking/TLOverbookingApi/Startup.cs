@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TLOverbookingApi.Services;
+using TLOverbookingApi.Services.RoomStay;
 using TLOverbookingApplication.Configuration;
 using TLOverbookingInfrastructure.Foundation;
 using TLOverbookingInfrastructure.Injections;
@@ -29,7 +30,7 @@ namespace TLOverbookingApi
             services.AddAppDependencies();
             services.AddScoped<IRoomStayFactApiService, RoomStayFactApiService>();
             services.AddScoped<IBookingCancellationApiService, BookingCancellationApiService>();
-            services.AddScoped<IRoomStayCancellationPredictionApiService, RoomStayCancellationPredictionApiService>();
+            services.AddScoped<ICancellationPredictionApiService, CancellationPredictionApiService>();
             services.AddSwaggerGen( c =>
              {
                  c.SwaggerDoc( "v1", new OpenApiInfo { Title = "TLOverbookingApi", Version = "v1" } );

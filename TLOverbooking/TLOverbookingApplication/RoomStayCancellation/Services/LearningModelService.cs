@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using TLOverbookingApplication.RoomStayFactExtraction.Services;
 using TLOverbookingDomain.RoomStayCancellation;
 
-namespace TLOverbookingApplication.RoomStayCancellationLearning.Services
+namespace TLOverbookingApplication.RoomStayCancellation.Services
 {
     public class LearningModelService : ILearningModelService
     {

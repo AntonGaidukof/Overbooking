@@ -6,7 +6,7 @@ using TLOverbookingApplication.RoomStayFactExtraction.Services;
 using TLOverbookingDomain.Abstractions;
 using TLOverbookingDomain.RoomStayFact;
 
-namespace TLOverbookingApi.Services
+namespace TLOverbookingApi.Services.RoomStay
 {
     public class RoomStayFactApiService : IRoomStayFactApiService
     {

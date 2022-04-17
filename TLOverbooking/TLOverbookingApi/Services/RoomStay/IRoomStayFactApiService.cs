@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using TLOverbookingApi.Dto.RoomStayFact;
 
-namespace TLOverbookingApi.Services
+namespace TLOverbookingApi.Services.RoomStay
 {
     public interface IRoomStayFactApiService
     {

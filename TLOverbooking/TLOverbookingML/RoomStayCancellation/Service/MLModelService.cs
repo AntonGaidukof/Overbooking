@@ -1,4 +1,6 @@
-﻿using TLOverbookingML.RoomStayCancellation.Model;
+﻿using System;
+using System.Collections.Generic;
+using TLOverbookingML.RoomStayCancellation.Model;
 
 namespace TLOverbookingML.RoomStayCancellation.Service
 {
@@ -6,7 +8,7 @@ namespace TLOverbookingML.RoomStayCancellation.Service
     {
         public string CreeateModel( long providerId )
         {
-            throw new System.NotImplementedException();
+            return string.Empty;
 
             /*
              * 1) Формируем строку с путем, где будет хранится модель
@@ -19,12 +21,26 @@ namespace TLOverbookingML.RoomStayCancellation.Service
 
         public void DeleteModel( string modelPath )
         {
-            throw new System.NotImplementedException();
         }
 
-        public ModelOutput Predict( ModelInput input, long providerId, string modelPath )
+        public Dictionary<long, ModelOutput> Predict( Dictionary<long, ModelInput> modelInputs, string modelPath )
         {
-            // Можно спокойно копипастить код из ConsumeModel
+            // Можно спокойно копипастить код из ConsumeModel, когда дойдет дело до нормальной реализации
+
+            var result = new Dictionary<long, ModelOutput>();
+
+            foreach ( var modelInputItem in modelInputs )
+            {
+                var rand = new Random();
+                var modelOutput = new ModelOutput
+                {
+                    Prediction = Convert.ToBoolean( rand.Next( 0, 1 ) )
+                };
+
+                result.Add( modelInputItem.Key, modelOutput );
+            }
+
+            return result;
         }
     }
 }
