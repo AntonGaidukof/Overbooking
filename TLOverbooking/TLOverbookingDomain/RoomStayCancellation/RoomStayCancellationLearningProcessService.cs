@@ -17,9 +17,9 @@ namespace TLOverbookingDomain.RoomStayCancellation
             _repository.Add( roomStayCancellationLearningProcess );
         }
 
-        public Task<RoomStayCancellationLearningProcess> GetAsync( long providerId, LearningStatus learningStatus )
+        public RoomStayCancellationLearningProcess GetCurrentActiveProcess( long providerId )
         {
-            return _repository.GetAsync( providerId, learningStatus );
+            return _repository.GetQuery().FirstOrDefault( e => e.ProviderId == providerId && e.Status != LearningStatus.Finished );
         }
     }
 }

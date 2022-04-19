@@ -2,7 +2,8 @@
 {
     public enum LearningStatus
     {
-        Processing = 0,
-        Finished = 1
+        Started = 0,
+        Processing = 1,
+        Finished = 2
     }
 }

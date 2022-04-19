@@ -34,7 +34,7 @@ namespace TLOverbookingML.RoomStayCancellation.Service
                 var rand = new Random();
                 var modelOutput = new ModelOutput
                 {
-                    Prediction = Convert.ToBoolean( rand.Next( 0, 1 ) )
+                    Prediction = rand.NextDouble() >= 0.5
                 };
 
                 result.Add( modelInputItem.Key, modelOutput );

@@ -47,7 +47,9 @@ namespace TLOverbookingInfrastructure.Injections
 
             // RoomStayCancellation
             services.AddScoped<IRoomStayCancellationLearningProcessRepository, RoomStayCancellationLearningProcessRepository>();
+            services.AddScoped<IRoomStayCancellationModelRepository, RoomStayCancellationModelRepository>();
             services.AddScoped<IRoomStayCancellationLearningProcessService, RoomStayCancellationLearningProcessService>();
+            services.AddScoped<IRoomStayCancellationModelService, RoomStayCancellationModelService>();
             services.AddScoped<ILearningModelService, LearningModelService>();
             services.AddScoped<IMLModelService, MLModelService>();
             services.AddScoped<IPredictionService, PredictionService>();

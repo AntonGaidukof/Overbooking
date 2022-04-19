@@ -4,7 +4,7 @@ namespace TLOverbookingDomain.RoomStayCancellation
 {
     public interface IRoomStayCancellationLearningProcessService
     {
-        Task<RoomStayCancellationLearningProcess> GetAsync( long providerId, LearningStatus learningStatus );
+        RoomStayCancellationLearningProcess GetCurrentActiveProcess( long providerId );
 
         void Add( RoomStayCancellationLearningProcess roomStayCancellationLearningProcess );
     }

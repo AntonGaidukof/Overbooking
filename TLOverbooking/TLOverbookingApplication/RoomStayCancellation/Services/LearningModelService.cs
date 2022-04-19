@@ -20,9 +20,9 @@ namespace TLOverbookingApplication.RoomStayCancellation.Services
 
         public async Task StartLearningAsync( long providerId, bool startFactExtraction = true )
         {
-            var currentLearningProcess = await _processService.GetAsync( providerId, LearningStatus.Processing );
+            var currentActiveProcess = _processService.GetCurrentActiveProcess( providerId );
 
-            if ( currentLearningProcess != null )
+            if ( currentActiveProcess != null )
             {
                 return;
             }
@@ -35,7 +35,7 @@ namespace TLOverbookingApplication.RoomStayCancellation.Services
             var learningProcess = new RoomStayCancellationLearningProcess
             {
                 ProviderId = providerId,
-                Status = LearningStatus.Processing,
+                Status = LearningStatus.Started,
                 TimeStampUtc = DateTime.UtcNow
             };
 

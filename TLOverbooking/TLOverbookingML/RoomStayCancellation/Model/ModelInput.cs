@@ -35,10 +35,10 @@ namespace TLOverbookingML.RoomStayCancellation.Model
         [ColumnName( "RatePlanId" ), LoadColumn( 9 )]
         public long RatePlanId { get; set; }
 
-        [ColumnName( "RoomId" ), LoadColumn( 10 )]
+        [ColumnName( "CreationSource" ), LoadColumn( 10 )]
         public string CreationSource { get; set; }
 
-        [ColumnName( "RatePlanId" ), LoadColumn( 11 )]
+        [ColumnName( "PurposeKind" ), LoadColumn( 11 )]
         public string PurposeKind { get; set; }
 
         [ColumnName( "DaysBetweenCheckInAndCanceling" ), LoadColumn( 12 )]
