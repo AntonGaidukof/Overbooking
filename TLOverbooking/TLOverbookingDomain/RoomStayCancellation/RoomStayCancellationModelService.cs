@@ -13,5 +13,17 @@
         {
             return _repository.GetByProviderId( providerId );
         }
+
+        public RoomStayCancellationModel Rebuild( long providerId )
+        {
+            var model = _repository.GetByProviderId( providerId );
+
+            if ( model != null )
+            {
+                return model;
+            }
+
+            return new RoomStayCancellationModel();
+        }
     }
 }

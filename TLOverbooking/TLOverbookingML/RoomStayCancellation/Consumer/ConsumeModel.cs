@@ -10,7 +10,7 @@ namespace TLOverbookingML.RoomStayCancellation.Consumer
         private static string _modelPath = @"C:\Users\anton\AppData\Local\Temp\MLVSTools\ClassificationModelML\ClassificationModelML.Model\MLModel.zip";
         private static Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictionEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>( CreatePredictionEngine );
 
-        public static ModelOutput Predict( ModelInput input )
+        public ModelOutput Predict( ModelInput input )
         {
             ModelOutput result = PredictionEngine.Value.Predict( input );
             return result;

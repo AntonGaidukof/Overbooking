@@ -8,5 +8,7 @@ namespace TLOverbookingApi.Services.RoomStay
         public Task StartLearningAsync( ModelStartLearningDto modelStartLearningDto );
 
         public CancellationPredictionsDto GetCancellationPredictions( GetCancellationPredictionDto request );
+
+        public Task CreateDataView( long providerId );
     }
 }

@@ -10,17 +10,17 @@ namespace TLOverbookingML.RoomStayCancellation.Builder
 {
     public static class ModelBuilder
     {
-        private static string TRAIN_DATA_FILEPATH = @"C:\Users\anton\AppData\Local\Temp\4866613a-8fce-4654-980f-5fecf4f72601.tsv";
-        private static string MODEL_FILEPATH = @"C:\Users\anton\AppData\Local\Temp\MLVSTools\ClassificationModelML\ClassificationModelML.Model\MLModel.zip";
+        //private static string TRAIN_DATA_FILEPATH = @"C:\Users\anton\AppData\Local\Temp\4866613a-8fce-4654-980f-5fecf4f72601.tsv";
+        //private static string MODEL_FILEPATH = @"C:\Users\anton\AppData\Local\Temp\MLVSTools\ClassificationModelML\ClassificationModelML.Model\MLModel.zip";
         // Create MLContext to be shared across the model creation workflow objects 
         // Set a random seed for repeatable/deterministic results across multiple trainings.
         private static MLContext mlContext = new MLContext( seed: 1 );
 
-        public static void CreateModel()
+        public static void CreateModel(string dataPath, string savepath)
         {
             // Load Data
             IDataView trainingDataView = mlContext.Data.LoadFromTextFile<ModelInput>(
-                                            path: TRAIN_DATA_FILEPATH,
+                                            path: dataPath,
                                             hasHeader: true,
                                             separatorChar: '\t',
                                             allowQuoting: true,
@@ -36,7 +36,7 @@ namespace TLOverbookingML.RoomStayCancellation.Builder
             Evaluate( mlContext, trainingDataView, trainingPipeline );
 
             // Save model
-            SaveModel( mlContext, mlModel, MODEL_FILEPATH, trainingDataView.Schema );
+            SaveModel( mlContext, mlModel, savepath, trainingDataView.Schema );
         }
 
         public static IEstimator<ITransformer> BuildTrainingPipeline( MLContext mlContext )

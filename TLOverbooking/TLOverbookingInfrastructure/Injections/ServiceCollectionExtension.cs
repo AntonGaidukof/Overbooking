@@ -53,6 +53,7 @@ namespace TLOverbookingInfrastructure.Injections
             services.AddScoped<ILearningModelService, LearningModelService>();
             services.AddScoped<IMLModelService, MLModelService>();
             services.AddScoped<IPredictionService, PredictionService>();
+            services.AddScoped<IRoomStayDataViewService, RoomStayDataViewService>();
 
             return services;
         }

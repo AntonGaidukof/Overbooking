@@ -28,5 +28,16 @@ namespace TLOverbookingApi.Controllers
             var response = _cancellationPredictionApiService.GetCancellationPredictions( request );
             return Ok( response );
         }
+
+        #region TestMethods
+
+        [HttpPost, Route( "room-stay/create-data-view/{providerId}" )]
+        public async Task<IActionResult> CreateDataViewAsync( long providerId )
+        {
+            await _cancellationPredictionApiService.CreateDataView( providerId );
+            return Ok();
+        }
+
+        #endregion
     }
 }

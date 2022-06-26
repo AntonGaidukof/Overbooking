@@ -5,6 +5,7 @@ using TLOverbookingApi.Dto.CancellationPrediction.RoomStay;
 using TLOverbookingApplication.RoomStayCancellation.Entities;
 using TLOverbookingApplication.RoomStayCancellation.Services;
 using TLOverbookingDomain.Abstractions;
+using TLOverbookingML.RoomStayCancellation.Service;
 
 namespace TLOverbookingApi.Services.RoomStay
 {
@@ -13,15 +14,23 @@ namespace TLOverbookingApi.Services.RoomStay
         private readonly ILearningModelService _learningModelService;
         private readonly IPredictionService _predictionService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMLModelService _mLModelService;
 
         public CancellationPredictionApiService( 
             ILearningModelService learningModelService,
             IPredictionService predictionService,
-            IUnitOfWork unitOfWork )
+            IUnitOfWork unitOfWork,
+            IMLModelService mLModelService )
         {
             _learningModelService = learningModelService;
             _predictionService = predictionService;
             _unitOfWork = unitOfWork;
+            _mLModelService = mLModelService;
+        }
+
+        public Task CreateDataView( long providerId )
+        {
+            return _mLModelService.CreeateModelAsync( providerId );
         }
 
         public CancellationPredictionsDto GetCancellationPredictions( GetCancellationPredictionDto request )
